@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class PlatformSpawner : GameSpawner
 {
-    [SerializeField] private int maxPlatforms = 10; // Максимальное количество платформ в очереди
-    [SerializeField] private float spawnDistance = 20f; // Расстояние до следующей платформы
+    [SerializeField] private int maxPlatforms = 10;
+    [SerializeField] private float spawnDistance = 20f;
 
-    private Queue<GameObject> platformQueue = new Queue<GameObject>(); // Очередь для хранения платформ
-    private float lastSpawnZ; // Z-координата последней спавненной платформы
+    private Queue<GameObject> platformQueue = new Queue<GameObject>();
+    private float lastSpawnZ;
 
     protected override void Start()
     {
         base.Start();
-        lastSpawnZ = player.position.z; // Инициализация начальной координаты
+        lastSpawnZ = player.position.z;
         for (int i = 0; i < maxPlatforms; i++)
         {
             SpawnPlatform();
@@ -28,7 +28,6 @@ public class PlatformSpawner : GameSpawner
         }
     }
 
-    // Метод для спавна платформы
     public override void SpawnPlatform(Vector3 position = default)
     {
         if (position == default)
@@ -41,7 +40,6 @@ public class PlatformSpawner : GameSpawner
         platformQueue.Enqueue(Instantiate(platformPrefabs[Random.Range(0, platformPrefabs.Length)], position, Quaternion.identity));
     }
 
-    // Метод для удаления самой старой платформы из очереди
     private void RemoveOldestPlatform()
     {
         if (platformQueue.Count > maxPlatforms)

@@ -7,11 +7,8 @@ public class ObjectSpawner : GameSpawner
         base.Start();
         SpawnObjects();
     }
-
-    // Метод для спавна объектов на целевых точках
     private void SpawnObjects()
     {
-        // Спавним объекты локации на точках locationSpawnPoints
         foreach (Transform target in locationSpawnPoints)
         {
             if (!usedSpawnPoints.Contains(target))
@@ -20,7 +17,6 @@ public class ObjectSpawner : GameSpawner
             }
         }
 
-        // Спавним объекты (препятствия и/или противников) на точках obstacleEnemySpawnPoints
         foreach (Transform target in obstacleEnemySpawnPoints)
         {
             if (!usedSpawnPoints.Contains(target))
@@ -41,7 +37,6 @@ public class ObjectSpawner : GameSpawner
         }
     }
 
-    // Метод для спавна объекта на указанной точке (переписываем метод базового класса)
     public override void SpawnObjectAtTarget(Transform target)
     {
         if (usedSpawnPoints.Contains(target))
