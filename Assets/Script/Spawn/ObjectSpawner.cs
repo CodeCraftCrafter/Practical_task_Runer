@@ -4,11 +4,14 @@ public class ObjectSpawner : GameSpawner
 {
     protected override void Start()
     {
-        base.Start();
+        // Убираем вызов base.Start(), чтобы избежать дублирования
         SpawnObjects();
     }
+
+    // Метод для спавна объектов на целевых точках
     private void SpawnObjects()
     {
+        // Спавним локационные объекты на точках locationSpawnPoints
         foreach (Transform target in locationSpawnPoints)
         {
             if (!usedSpawnPoints.Contains(target))
@@ -17,37 +20,35 @@ public class ObjectSpawner : GameSpawner
             }
         }
 
+        // Спавним противников на точках obstacleEnemySpawnPoints
         foreach (Transform target in obstacleEnemySpawnPoints)
         {
             if (!usedSpawnPoints.Contains(target))
             {
-                bool spawnObstacle = Random.value > 0.5f;
-
-                if (spawnObstacle)
-                {
-                    int randomIndexObstacle = Random.Range(0, obstaclePrefabs.Length);
-                    Instantiate(obstaclePrefabs[randomIndexObstacle], target.position, target.rotation, target);
-                }
-                else
-                {
-                    int randomIndexEnemy = Random.Range(0, enemyPrefabs.Length);
-                    Instantiate(enemyPrefabs[randomIndexEnemy], target.position, target.rotation, target);
-                }
+                int enemyIndex = Random.Range(0, enemyPrefabs.Length);
+                var platformPositionY = target.position.y + transform.position.y;
+                var platformPosition = new Vector3(target.position.x, platformPositionY, target.position.z);
+                var spawnedEnemy = Instantiate(enemyPrefabs[enemyIndex], platformPosition, target.rotation, transform);
+                Debug.Log($"Spawned enemy at {platformPosition}");
             }
         }
     }
 
+    // Метод для спавна объекта на указанной точке (переписываем метод базового класса)
     public override void SpawnObjectAtTarget(Transform target)
     {
         if (usedSpawnPoints.Contains(target))
         {
-            Debug.LogError("SpawnObjectAtTarget called multiple times for the same target: " + target.name);
+            Debug.LogError($"SpawnObjectAtTarget called multiple times for the same target: {target.name}");
         }
         else
         {
             usedSpawnPoints.Add(target);
+            var platformPositionY = target.position.y + transform.position.y;
+            var platformPosition = new Vector3(target.position.x, platformPositionY, target.position.z);
             int randomIndex = Random.Range(0, obstaclePrefabs.Length);
-            Instantiate(obstaclePrefabs[randomIndex], target.position, target.rotation, target);
+            var spawnedObject = Instantiate(obstaclePrefabs[randomIndex], platformPosition, target.rotation, transform);
+            Debug.Log($"Spawned object at {platformPosition}");
         }
     }
 }
