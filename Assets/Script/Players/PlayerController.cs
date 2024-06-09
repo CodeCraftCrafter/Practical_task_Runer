@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
     // Метод для проверки нахождения на земле
     private void GroundCheck()
     {
-        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundMask);
+        // Создаем сферический Raycast для лучшей проверки на землю
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckDistance, groundMask);
         Debug.DrawRay(groundCheck.position, Vector3.down * groundCheckDistance, Color.red);
     }
 
@@ -55,6 +56,6 @@ public class Player : MonoBehaviour
     // Метод для прыжка
     private void Jump()
     {
-        rb.AddForce(Vector3.up * jumpForce);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Изменяем тип силы на импульс
     }
 }
