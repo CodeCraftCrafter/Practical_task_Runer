@@ -1,10 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectSpawner : GameSpawner
+public class ObjectSpawner : MonoBehaviour
 {
-    protected override void Start()
+    [SerializeField] private Transform[] locationSpawnPoints; // Точки спавна локационных объектов
+    [SerializeField] private Transform[] obstacleEnemySpawnPoints; // Точки спавна противников
+    [SerializeField] private GameObject[] obstaclePrefabs; // Префабы препятствий
+    [SerializeField] private GameObject[] enemyPrefabs; // Префабы противников
+
+    private HashSet<Transform> usedSpawnPoints = new HashSet<Transform>();
+
+    protected void Start()
     {
-        // Убираем вызов base.Start(), чтобы избежать дублирования
+        if (!enabled) return;
+
         SpawnObjects();
     }
 
@@ -25,7 +34,7 @@ public class ObjectSpawner : GameSpawner
         {
             if (!usedSpawnPoints.Contains(target))
             {
-                int enemyIndex = Random.Range(0, enemyPrefabs.Length);
+                int enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
                 var platformPositionY = target.position.y + transform.position.y;
                 var platformPosition = new Vector3(target.position.x, platformPositionY, target.position.z);
                 var spawnedEnemy = Instantiate(enemyPrefabs[enemyIndex], platformPosition, target.rotation, transform);
@@ -34,8 +43,8 @@ public class ObjectSpawner : GameSpawner
         }
     }
 
-    // Метод для спавна объекта на указанной точке (переписываем метод базового класса)
-    public override void SpawnObjectAtTarget(Transform target)
+    // Метод для спавна объекта на указанной точке
+    public void SpawnObjectAtTarget(Transform target)
     {
         if (usedSpawnPoints.Contains(target))
         {
@@ -46,7 +55,7 @@ public class ObjectSpawner : GameSpawner
             usedSpawnPoints.Add(target);
             var platformPositionY = target.position.y + transform.position.y;
             var platformPosition = new Vector3(target.position.x, platformPositionY, target.position.z);
-            int randomIndex = Random.Range(0, obstaclePrefabs.Length);
+            int randomIndex = UnityEngine.Random.Range(0, obstaclePrefabs.Length);
             var spawnedObject = Instantiate(obstaclePrefabs[randomIndex], platformPosition, target.rotation, transform);
             Debug.Log($"Spawned object at {platformPosition}");
         }

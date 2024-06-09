@@ -1,8 +1,12 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
+using System.Collections.Generic; // Добавлено пространство имен для HashSet
 
 public class GameSpawner : MonoBehaviour
 {
+    public static event Action<GameObject> OnPlatformSpawned;
+    public static event Action<Transform> OnPlayerSpawned;
+
     [SerializeField] protected GameObject[] platformPrefabs; // Префабы платформ
     [SerializeField] protected GameObject[] obstaclePrefabs; // Префабы препятствий (локационные объекты)
     [SerializeField] protected GameObject[] enemyPrefabs; // Префабы противников (взаимодействие с игроком)
@@ -20,37 +24,8 @@ public class GameSpawner : MonoBehaviour
     {
         GameObject platform = Instantiate(platformPrefabs[prefabIndex], position, Quaternion.identity);
         Debug.Log($"Spawned platform at {position}");
-        SpawnObstaclesOnPlatform(platform);
-        SpawnEnemiesOnPlatform(platform);
+        OnPlatformSpawned?.Invoke(platform); // Уведомляем о спавне новой платформы
         return platform;
-    }
-
-    // Метод для спавна локационных объектов на платформе
-    protected void SpawnObstaclesOnPlatform(GameObject platform)
-    {
-        foreach (Transform point in locationSpawnPoints)
-        {
-            var platformPositionY = point.position.y + platform.transform.position.y;
-            var platformPosition = new Vector3(point.position.x, platformPositionY, point.position.z);
-
-            int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
-            var spawnedObstacle = Instantiate(obstaclePrefabs[obstacleIndex], platformPosition, Quaternion.identity, platform.transform);
-            Debug.Log($"Spawned obstacle at {platformPosition}");
-        }
-    }
-
-    // Метод для спавна противников на платформе
-    protected void SpawnEnemiesOnPlatform(GameObject platform)
-    {
-        foreach (Transform point in obstacleEnemySpawnPoints)
-        {
-            var platformPositionY = point.position.y + platform.transform.position.y;
-            var platformPosition = new Vector3(point.position.x, platformPositionY, point.position.z);
-
-            int enemyIndex = Random.Range(0, enemyPrefabs.Length);
-            var spawnedEnemy = Instantiate(enemyPrefabs[enemyIndex], platformPosition, Quaternion.identity, platform.transform);
-            Debug.Log($"Spawned enemy at {platformPosition}");
-        }
     }
 
     // Метод для спавна объектов локации на точках Target
@@ -67,7 +42,7 @@ public class GameSpawner : MonoBehaviour
             var platformPositionY = target.position.y + transform.position.y;
             var platformPosition = new Vector3(target.position.x, platformPositionY, target.position.z);
 
-            int randomIndex = Random.Range(0, obstaclePrefabs.Length);
+            int randomIndex = UnityEngine.Random.Range(0, obstaclePrefabs.Length);
             var spawnedObject = Instantiate(obstaclePrefabs[randomIndex], platformPosition, Quaternion.identity, transform);
             Debug.Log($"Spawned object at {platformPosition}");
         }
@@ -101,6 +76,7 @@ public class GameSpawner : MonoBehaviour
             GameObject playerInstance = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
             player = playerInstance.transform;
             Debug.Log($"Spawned player at {spawnPoint.position}");
+            OnPlayerSpawned?.Invoke(player);
         }
         else
         {

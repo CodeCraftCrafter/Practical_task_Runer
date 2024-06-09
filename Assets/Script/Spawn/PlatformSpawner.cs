@@ -9,6 +9,16 @@ public class PlatformSpawner : GameSpawner
     private Queue<GameObject> platformQueue = new Queue<GameObject>(); // Очередь для хранения платформ
     private float lastSpawnZ; // Z-координата последней спавненной платформы
 
+    private void OnEnable()
+    {
+        GameSpawner.OnPlatformSpawned += ActivateObjectSpawner;
+    }
+
+    private void OnDisable()
+    {
+        GameSpawner.OnPlatformSpawned -= ActivateObjectSpawner;
+    }
+
     protected override void Start()
     {
         // Используем базовую платформу с индексом 0 как начальную платформу
@@ -19,7 +29,8 @@ public class PlatformSpawner : GameSpawner
         for (int i = 0; i < maxPlatforms; i++)
         {
             Vector3 position = new Vector3(0, 0, lastSpawnZ + spawnDistance);
-            GameObject platform = SpawnPlatform(position, 1); // Префаб с индексом 1
+            int randomIndex = UnityEngine.Random.Range(1, platformPrefabs.Length); // Выбираем случайный индекс префаба > 0
+            GameObject platform = SpawnPlatform(position, randomIndex); // Префаб с индексом 1 и выше
             platformQueue.Enqueue(platform);
             lastSpawnZ += spawnDistance;
         }
@@ -33,10 +44,21 @@ public class PlatformSpawner : GameSpawner
         if (player.position.z - lastSpawnZ > spawnDistance)
         {
             Vector3 position = new Vector3(0, 0, lastSpawnZ);
-            GameObject platform = SpawnPlatform(position, 1); // Префаб с индексом 1
+            int randomIndex = UnityEngine.Random.Range(1, platformPrefabs.Length); // Выбираем случайный индекс префаба > 0
+            GameObject platform = SpawnPlatform(position, randomIndex); // Префаб с индексом 1 и выше
             platformQueue.Enqueue(platform);
             lastSpawnZ += spawnDistance;
             RemoveOldestPlatform();
+        }
+    }
+
+    // Метод для активации ObjectSpawner на новой платформе
+    private void ActivateObjectSpawner(GameObject platform)
+    {
+        ObjectSpawner spawner = platform.GetComponent<ObjectSpawner>();
+        if (spawner != null)
+        {
+            spawner.enabled = true; // Активируем ObjectSpawner на новой платформе
         }
     }
 
