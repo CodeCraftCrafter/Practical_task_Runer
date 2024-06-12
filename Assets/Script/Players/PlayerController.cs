@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,17 +10,20 @@ public class Player : MonoBehaviour
     public Transform groundCheck; // Точка для Raycast
 
     private Rigidbody rb;
+    private Animator animator;
     private bool isGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>(); // Получаем компонент Animator
     }
 
     void Update()
     {
         GroundCheck();
         HandleJump();
+        HandleMovementAnimation();
     }
 
     void FixedUpdate()
@@ -57,5 +61,23 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Изменяем тип силы на импульс
+        animator.SetBool("Jump", true); // Устанавливаем булеву переменную в аниматоре в true
+        StartCoroutine(ResetJumpBool()); // Запускаем корутину для сброса булевой переменной
+    }
+
+    // Корутин для сброса булевой переменной после прыжка
+    private IEnumerator ResetJumpBool()
+    {
+        yield return new WaitForSeconds(0.1f); // Ждем короткое время
+        animator.SetBool("Jump", false); // Сбрасываем булеву переменную в false
+    }
+
+    // Метод для управления анимацией движения
+    private void HandleMovementAnimation()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        bool isMoving = moveHorizontal != 0f || moveVertical != 0f;
+        animator.SetBool("Speed", isMoving); // Устанавливаем булеву переменную "Speed" в зависимости от движения
     }
 }
