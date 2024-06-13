@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
     private Animator animator;
+    private Weapon weapon;
     private bool isGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>(); // Получаем компонент Animator
+        weapon = GetComponentInChildren<Weapon>(); // Получаем компонент Weapon
     }
 
     void Update()
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
         GroundCheck();
         HandleJump();
         HandleMovementAnimation();
+        HandleShooting();
     }
 
     void FixedUpdate()
@@ -79,5 +82,14 @@ public class Player : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
         bool isMoving = moveHorizontal != 0f || moveVertical != 0f;
         animator.SetBool("Speed", isMoving); // Устанавливаем булеву переменную "Speed" в зависимости от движения
+    }
+
+    // Метод для обработки стрельбы
+    private void HandleShooting()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl)) // Стреляем при нажатии на Ctrl
+        {
+            weapon.Shoot();
+        }
     }
 }
