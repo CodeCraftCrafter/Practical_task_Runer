@@ -1,35 +1,32 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic; // Добавлено пространство имен для HashSet
+using System.Collections.Generic;
 
 public class GameSpawner : MonoBehaviour
 {
     public static event Action<GameObject> OnPlatformSpawned;
     public static event Action<Transform> OnPlayerSpawned;
 
-    [SerializeField] protected GameObject[] platformPrefabs; // Префабы платформ
-    [SerializeField] protected GameObject[] obstaclePrefabs; // Префабы препятствий (локационные объекты)
-    [SerializeField] protected GameObject[] enemyPrefabs; // Префабы противников (взаимодействие с игроком)
-    [SerializeField] protected Transform[] locationSpawnPoints; // Точки спавна локационных объектов
-    [SerializeField] protected Transform[] obstacleEnemySpawnPoints; // Точки спавна противников
-    [SerializeField] protected Transform[] playerSpawnPoints; // Точки спавна игрока
-    [SerializeField] protected GameObject playerPrefab; // Префаб игрока
-    protected Transform player; // Игрок
+    [SerializeField] protected GameObject[] platformPrefabs; 
+    [SerializeField] protected GameObject[] obstaclePrefabs;
+    [SerializeField] protected GameObject[] enemyPrefabs;
+    [SerializeField] protected Transform[] locationSpawnPoints;
+    [SerializeField] protected Transform[] obstacleEnemySpawnPoints;
+    [SerializeField] protected Transform[] playerSpawnPoints;
+    [SerializeField] protected GameObject playerPrefab;
+    protected Transform player;
 
-    // Коллекция для отслеживания вызовов метода SpawnObjectAtTarget
-    protected HashSet<Transform> usedSpawnPoints = new HashSet<Transform>();
+      protected HashSet<Transform> usedSpawnPoints = new HashSet<Transform>();
 
-    // Метод для спавна платформы
-    public virtual GameObject SpawnPlatform(Vector3 position, int prefabIndex)
+     public virtual GameObject SpawnPlatform(Vector3 position, int prefabIndex)
     {
         GameObject platform = Instantiate(platformPrefabs[prefabIndex], position, Quaternion.identity);
         Debug.Log($"Spawned platform at {position}");
-        OnPlatformSpawned?.Invoke(platform); // Уведомляем о спавне новой платформы
+        OnPlatformSpawned?.Invoke(platform);
         return platform;
     }
 
-    // Метод для спавна объектов локации на точках Target
-    public virtual void SpawnObjectAtTarget(Transform target)
+      public virtual void SpawnObjectAtTarget(Transform target)
     {
         if (usedSpawnPoints.Contains(target))
         {
@@ -48,18 +45,14 @@ public class GameSpawner : MonoBehaviour
         }
     }
 
-    // Метод для инициализации спавна на старте игры
-    protected virtual void Start()
+      protected virtual void Start()
     {
-        // Спавн локационных объектов на точках Target
         SpawnLocationObjects();
 
-        // Спавн игрока на стартовой точке
-        SpawnPlayer();
+         SpawnPlayer();
     }
 
-    // Метод для спавна объектов локации на точках Target
-    protected void SpawnLocationObjects()
+     protected void SpawnLocationObjects()
     {
         foreach (Transform point in locationSpawnPoints)
         {
@@ -67,12 +60,11 @@ public class GameSpawner : MonoBehaviour
         }
     }
 
-    // Метод для спавна игрока на стартовой точке
-    protected void SpawnPlayer()
+      protected void SpawnPlayer()
     {
         if (playerSpawnPoints.Length > 0)
         {
-            Transform spawnPoint = playerSpawnPoints[0]; // Можно выбрать случайный или конкретный индекс
+            Transform spawnPoint = playerSpawnPoints[0];
             GameObject playerInstance = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
             player = playerInstance.transform;
             Debug.Log($"Spawned player at {spawnPoint.position}");

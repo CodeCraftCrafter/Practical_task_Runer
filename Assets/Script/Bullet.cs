@@ -5,8 +5,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float damage = 5f;
-    [SerializeField] private GameObject hitPrefab; // Префаб точки попадания
-    [SerializeField] private float destroyDelay = 0f; // Задержка перед уничтожением пули
+    [SerializeField] private GameObject hitPrefab;
+    [SerializeField] private float destroyDelay = 0f;
     public string[] targetTags = { "Target_1", "Target_2" };
 
     private Weapon weapon;
@@ -14,14 +14,13 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        weapon = FindObjectOfType<Weapon>(); // Найти оружие в сцене
+        weapon = FindObjectOfType<Weapon>();
         rb = GetComponent<Rigidbody>();
         Invoke("Deactivate", lifeTime);
     }
 
     private void Update()
     {
-        // Перемещаем пулю вперед
         rb.MovePosition(rb.position + transform.forward * speed * Time.deltaTime);
     }
 
@@ -43,12 +42,10 @@ public class Bullet : MonoBehaviour
                     }
                 }
 
-                // Создание точки попадания
                 var contactPoint = coll.ClosestPoint(transform.position);
                 var rotation = Quaternion.LookRotation(coll.transform.position - transform.position);
                 Instantiate(hitPrefab, contactPoint, rotation);
 
-                // Деактивируем пулю сразу после столкновения
                 Deactivate();
                 return;
             }
@@ -57,7 +54,7 @@ public class Bullet : MonoBehaviour
 
     private void Deactivate()
     {
-        CancelInvoke(); // Отменяем все вызовы Invoke
+        CancelInvoke();
         Debug.Log("Bullet deactivated");
         weapon.ReturnBulletToPool(gameObject);
     }

@@ -4,7 +4,7 @@ using System.Linq;
 public class TargetSystem : MonoBehaviour
 {
     public float range = 15f;
-    public string[] targetTags = { "Target_1", "Target_2" }; // Массив тегов для врагов
+    public string[] targetTags = { "Target_1", "Target_2" };
     public Texture2D aim;
     public float aimSize = 50f;
 
@@ -36,11 +36,11 @@ public class TargetSystem : MonoBehaviour
             GetTargets();
             if (colls.Length > 0)
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift)) // выбор другой ближайшей цели, исключая текущую - левый шифт
+                if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     NearTarget();
                 }
-                else if (Input.GetKeyDown(KeyCode.LeftControl)) // выбор случайной цели, исключая текущую - левый контрол
+                else if (Input.GetKeyDown(KeyCode.LeftControl))
                 {
                     RandomTarget();
                 }
