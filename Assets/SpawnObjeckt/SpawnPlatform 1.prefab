@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 1657728596747280158}
   - component: {fileID: 1520618729437059971}
   - component: {fileID: 1909770680194382385}
+  - component: {fileID: 3186507979133910047}
   m_Layer: 4
   m_Name: SpawnPlatform 1
   m_TagString: Untagged
@@ -410,6 +411,35 @@ MonoBehaviour:
   startPoint: {fileID: 9156177744221952942}
   endPoints:
   - {fileID: 8206132801316481969}
+--- !u!114 &3186507979133910047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686360100428622953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64c83bfacb20e04287949dd1f17e2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToSpawn: []
+  spawnPoints:
+  - {fileID: 2251741435232072574}
+  - {fileID: 218313567618245124}
+  - {fileID: 7063471905395323642}
+  - {fileID: 2863423676196476488}
+  - {fileID: 516452271779168389}
+  - {fileID: 3162853769015407734}
+  - {fileID: 2070758217944151262}
+  - {fileID: 4014877109105512948}
+  - {fileID: 8929026505982498086}
+  - {fileID: 5001299831379102740}
+  - {fileID: 9206487287094032172}
+  - {fileID: 5018878542921495507}
+  - {fileID: 625413367039076046}
+  - {fileID: 2070163691066597564}
+  - {fileID: 6309052688350924586}
 --- !u!1 &724644964098262467
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class Generator : MonoBehaviour
     public GameObject playerPrefab; // Префаб игрока
     public Transform[] playerSpawnPoints; // Точки спавна игрока
     public static event System.Action<Transform> OnPlayerSpawned; // Событие для спавна игрока
+    public static event System.Action<Section> OnSectionSpawned; // Событие для спавна секции
 
     private List<Section> currentSections = new List<Section>();
     private Queue<Section> sectionQueue = new Queue<Section>();
@@ -46,6 +47,9 @@ public class Generator : MonoBehaviour
 
         currentSections.Add(newSection);
         sectionQueue.Enqueue(newSection);
+
+        // Вызов события спавна секции
+        OnSectionSpawned?.Invoke(newSection);
 
         foreach (var endPoint in newSection.endPoints)
         {
