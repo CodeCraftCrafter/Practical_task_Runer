@@ -395,6 +395,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &549937299259266683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6605116435313269847}
+  m_Layer: 4
+  m_Name: endPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6605116435313269847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549937299259266683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.49}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5374357816970956148}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1324056807937391258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,6 +1260,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8766999889399923049}
+  - {fileID: 3807232591618674855}
   m_Father: {fileID: 8239596671514821928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5613303515063631242
@@ -1843,7 +1875,8 @@ Transform:
   m_LocalPosition: {x: 1.560658, y: 7.5074205, z: 8.100422}
   m_LocalScale: {x: 0.50083154, y: -0.027004, z: 0.4988026}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6605116435313269847}
   m_Father: {fileID: 8239596671514821928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7377883830088719252
@@ -2260,6 +2293,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7704341102197370931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3807232591618674855}
+  m_Layer: 4
+  m_Name: startPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3807232591618674855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704341102197370931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.519}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4479039173327121619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7945472501021591300
 GameObject:
   m_ObjectHideFlags: 0
@@ -2437,7 +2501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8239596671514821928}
   - component: {fileID: 8654696153285890473}
-  - component: {fileID: 5335207624519906301}
+  - component: {fileID: 8288161559402295024}
   m_Layer: 4
   m_Name: SpawnPlatform (Bild)
   m_TagString: Untagged
@@ -2512,7 +2576,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.52, y: 0.06, z: 2.04}
   m_Center: {x: 1.57, y: 7.53, z: 7.37}
---- !u!114 &5335207624519906301
+--- !u!114 &8288161559402295024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2521,21 +2585,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8876369456773542224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba9ec68a5cbb3742b6d3885e18bd7fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 942dcf1d3672f184589176f597902c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefabs: []
-  obstaclePrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  enemyPrefabs:
-  - {fileID: 0}
-  locationSpawnPoints: []
-  obstacleEnemySpawnPoints: []
-  playerSpawnPoints: []
-  playerPrefab: {fileID: 0}
+  startPoint: {fileID: 3807232591618674855}
+  endPoints:
+  - {fileID: 6605116435313269847}
 --- !u!1 &8949240263233095239
 GameObject:
   m_ObjectHideFlags: 0
