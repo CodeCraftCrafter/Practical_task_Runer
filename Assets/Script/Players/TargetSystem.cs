@@ -14,12 +14,12 @@ public class TargetSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        GameSpawner.OnPlayerSpawned += SetPlayer;
+        Generator.OnPlayerSpawned += SetPlayer;
     }
 
     private void OnDisable()
     {
-        GameSpawner.OnPlayerSpawned -= SetPlayer;
+        Generator.OnPlayerSpawned -= SetPlayer;
     }
 
     private void SetPlayer(Transform playerTransform)

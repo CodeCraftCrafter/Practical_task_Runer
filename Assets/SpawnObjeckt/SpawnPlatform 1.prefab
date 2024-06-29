@@ -440,6 +440,11 @@ MonoBehaviour:
   - {fileID: 625413367039076046}
   - {fileID: 2070163691066597564}
   - {fileID: 6309052688350924586}
+  obstaclesToSpawn: []
+  obstacleSpawnPoints:
+  - {fileID: 3324141232740081468}
+  - {fileID: 3851620995560166051}
+  - {fileID: 2394263096264399851}
 --- !u!1 &724644964098262467
 GameObject:
   m_ObjectHideFlags: 0
